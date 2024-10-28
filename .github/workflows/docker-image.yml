@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: username/repo-name:latest  # Replace with your Docker image path
+          tags: ${{ secrets.DOCKER_USERNAME }}/testdocker:latest
