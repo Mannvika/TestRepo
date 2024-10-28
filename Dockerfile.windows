@@ -1,0 +1,18 @@
+# Use a Windows-compatible Python base image
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install Python and dependencies
+RUN powershell -Command \
+    Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe -OutFile python.exe; \
+    Start-Process python.exe -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1' -NoNewWindow -Wait; \
+    python -m pip install --upgrade pip; \
+    pip install -r requirements.txt
+
+# Specify the command to run the application
+CMD ["python", "main.py"]
